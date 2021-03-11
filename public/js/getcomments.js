@@ -1,7 +1,7 @@
 function getcomments(){
     var xreq = new XMLHttpRequest();
     xreq.open("GET","https://us-central1-webapp-2f506.cloudfunctions.net/getcomments");
-
+//test
     xreq.onreadystatechange = function() {
         var done = 4;
         var ok = 200;
