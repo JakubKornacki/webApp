@@ -5,11 +5,11 @@ function register(){
     firebase.auth().createUserWithEmailAndPassword(email,password).then((userCredential)=>{
         var user = userCredential.user;
         window.location.href = "/secure.html";
-        console.log("user");
+        console.log(user);
     })
     .catch((error)=>{
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log("errorMessage,errorCode");
+        console.log(errorMessage,errorCode);
     })
 }

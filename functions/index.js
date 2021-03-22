@@ -44,3 +44,52 @@ exports.deletecomment = functions.https.onRequest((request, response) => {
     });
   });
 });
+
+exports.authorizedendpoint = functions.https.onRequest((request, response) =>{
+
+   cors(request,response, () =>{
+       console.log("Check if request is authorized with Firebase ID token");
+       if((!request.headers.authorization || !request.headers.authorization.startsWith("Bearer "))) {
+           console.error("No Firebase ID token was passed as a Bearer token in the Authorization header.",
+               "Make sure you authorize your requrest by providing the following HTTP header Authorization: Bearer Firebase ID token");
+           response.status(403).send("Unauthorized");
+           return
+       }
+       let idToken;
+       if(request.headers.authorization && request.headers.authorization.startsWith("Bearer ")){
+           console.log('Found "Authorization" header');
+           // Read the ID token from the Authorization header.
+           idToken = request.headers.authorization.split("Bearer ")[1];
+       } else {
+           response.status(403).send("Unauthorized");
+           return;
+       }
+       try {
+           const decodedIdToken = admin.auth().verifyIdToken(idToken).then((token) => {
+               console.log("ID token correctly decoded ", token);
+               response.send("Welcome to the secure section ");
+               let myComments = [];
+               admin.firestore().collection('comments').where("uid","==",token.uid).get().then((snapshot)=>{
+
+                    if(snapshot.empty){
+                        console.log("No matching documents.");
+                        response.send("No data");
+                        return;
+                    }
+
+                    snapshot.forEach(doc =>{
+                        let docObj = {};
+                        docObj.id = doc.id;
+                        myComments.push(Object.assign(docObj, doc.data()))
+                    });
+
+                    response.send(myComments);
+               });
+           });
+       } catch(error){
+           console.error("Error while verifying Firebase ID token", error);
+           response.status(403).send("Unauthorized");
+           return;
+       }
+   });
+});
