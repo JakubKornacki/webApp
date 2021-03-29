@@ -1,0 +1,10 @@
+{
+  "name": "webapp-2f506",
+  "version": "1.0.0",
+  "dependencies": {
+  },
+  "scripts": {
+    "serve": "firebase emulators:start",
+    "functions":"firebase deploy --only functions"
+  }
+}

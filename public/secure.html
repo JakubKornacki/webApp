@@ -1,10 +1,15 @@
-<html>
-    <head>
-        <title>Welcome on the secure web-page</title>
-    </head>
-    <body>
-        <p id="response"></p>
-        <button onclick="logout();">Logout!</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to the secure page</title>
+    <script src="js/accessSecureAPI.js"></script>
+</head>
+<body>
+<script>getSecureAPI()</script>
+<h1>Welcome to the secure page</h1>
+<h1 id="response"></h1>
+<button onclick="logout();">Logout!</button>
 
  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 
@@ -21,7 +26,6 @@
 
 <!-- Initialize Firebase -->
 <script src="/__/firebase/init.js"></script>
-<script src="js/accessSecureAPI.js"></script>
-<script>getSecureAPI();</script>
-    </body>
+</body>
 </html>
+ 

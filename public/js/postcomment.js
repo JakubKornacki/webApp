@@ -1,5 +1,6 @@
 function postcomment(){
     var xreq = new XMLHttpRequest();
+    
     xreq.open("POST","https://us-central1-webapp-2f506.cloudfunctions.net/postcomments");
     xreq.setRequestHeader("Content-type", "application/json");
     xreq.onreadystatechange = function() {
